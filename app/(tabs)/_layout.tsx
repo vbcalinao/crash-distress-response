@@ -68,7 +68,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Distress Voice',
                     tabBarIcon: ({ color }) => (
-                        <IconSymbol size={28} name="sos" color={color} />
+                        <IconSymbol size={28} name="sos.circle" color={color} />
                     ),
                 }}
             />

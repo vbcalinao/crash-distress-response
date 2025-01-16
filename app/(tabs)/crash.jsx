@@ -168,7 +168,7 @@ export default function TabThreeScreen() {
                 <IconSymbol
                     size={310}
                     color="#808080"
-                    name="chevron.left.forwardslash.chevron.right"
+                    name="exclamationmark.brakesignal"
                     style={styles.headerImage}
                 />
             }
