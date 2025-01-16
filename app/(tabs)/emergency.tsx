@@ -1,4 +1,12 @@
-import { StyleSheet, Platform, Alert, KeyboardAvoidingView } from 'react-native';
+import {
+    StyleSheet,
+    Platform,
+    Alert,
+    TouchableOpacity,
+    Text,
+    View,
+    KeyboardAvoidingView,
+} from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -24,14 +32,8 @@ export default function TabTwoScreen() {
             return false;
         }
 
-        if (!contact.toString().trim()) {
+        if (!contact.trim()) {
             Alert.alert('Error', 'Contact number is required.');
-            return false;
-        }
-
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(contact.toString().trim())) {
-            Alert.alert('Error', 'Please enter a valid 10-digit contact number.');
             return false;
         }
 
@@ -54,6 +56,10 @@ export default function TabTwoScreen() {
         }
     };
 
+    const toggleEdit = () => {
+        setIsSaved(!isSaved);
+    };
+
     return (
         <KeyboardAvoidingView
             style={{ flex: 1 }}
@@ -63,7 +69,6 @@ export default function TabTwoScreen() {
             keyboardVerticalOffset={0}
         >
             <ParallaxScrollView
-                keyboardShouldPersistTaps="handled"
                 headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
                 headerImage={
                     <IconSymbol
@@ -90,21 +95,49 @@ export default function TabTwoScreen() {
                 <FormField
                     title="Contact Number"
                     placeholder={`+63 ${isSaved ? contact : ''}`}
-                    handleChangeText={(e) => setContact(63 + Number(e))}
+                    handleChangeText={(e) => {
+                        let contact = e.toString().trim();
+                        if (contact.startsWith('9')) {
+                            contact = '63' + contact;
+                        } else if (contact.startsWith('0')) {
+                            contact = '63' + contact.slice(1);
+                        } else if (contact.startsWith('63')) {
+                            contact = contact;
+                        }
+
+                        setContact(contact);
+                    }}
                     otherStyles="mt-7"
                     keyboardType="numeric"
                     editable={!isSaved}
                 />
 
-                <CustomButton
-                    title="Save"
-                    handlesPress={submit}
-                    containerStyle={
-                        isSaved ? styles.buttonDisabled : styles.buttonActive
-                    }
-                    isLoading={isSubmitting}
-                    disabled={isSaved || isSubmitting}
-                />
+                <View style={styles.buttonContainer}>
+                    {/* Save Button */}
+                    <CustomButton
+                        title="Save"
+                        handlesPress={submit}
+                        containerStyle={
+                            isSaved
+                                ? styles.buttonDisabled
+                                : styles.buttonActive
+                        }
+                        isLoading={isSubmitting}
+                        disabled={isSaved || isSubmitting}
+                    />
+
+                    {isSaved && (
+                        <TouchableOpacity
+                            style={styles.editButton}
+                            onPress={toggleEdit}
+                            disabled={isSubmitting}
+                        >
+                            <Text style={styles.editButtonText}>
+                                {isSaved ? 'Edit' : 'Cancel'}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
             </ParallaxScrollView>
         </KeyboardAvoidingView>
     );
@@ -121,10 +154,34 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 8,
     },
+    container: {
+        flex: 1,
+        padding: 16,
+    },
+    buttonContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: 20,
+    },
+    editButton: {
+        backgroundColor: '#2196F3',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderWidth: 2,
+        borderRadius: 16,
+        width: '100%',
+    },
+    editButtonText: {
+        fontSize: 18,
+        color: '#black',
+        fontFamily: 'Poppins-Semibold',
+    },
     buttonActive: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#4CAF50', // Active color for save button
     },
     buttonDisabled: {
-        backgroundColor: '#D1D5DB',
+        backgroundColor: '#B0BEC5', // Disabled color for save button
     },
 });
