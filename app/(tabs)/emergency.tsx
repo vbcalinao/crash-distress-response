@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, Alert } from 'react-native';
+import { StyleSheet, Platform, Alert, KeyboardAvoidingView } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -31,10 +31,7 @@ export default function TabTwoScreen() {
 
         const phoneRegex = /^[0-9]{10}$/;
         if (!phoneRegex.test(contact.toString().trim())) {
-            Alert.alert(
-                'Error',
-                'Please enter a valid 10-digit contact number.'
-            );
+            Alert.alert('Error', 'Please enter a valid 10-digit contact number.');
             return false;
         }
 
@@ -49,7 +46,6 @@ export default function TabTwoScreen() {
             }
 
             Alert.alert('Success', 'Emergency contact added successfully');
-
             setIsSaved(true);
         } catch (error) {
             Alert.alert('Error', (error as Error).message);
@@ -59,49 +55,58 @@ export default function TabTwoScreen() {
     };
 
     return (
-        <ParallaxScrollView
-            headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-            headerImage={
-                <IconSymbol
-                    size={310}
-                    color="#808080"
-                    name="chevron.left.forwardslash.chevron.right"
-                    style={styles.headerImage}
-                />
-            }
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            // iOS uses 'padding' or 'position', while Android typically works well with 'height'
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            // If you’re using a navigation header or SafeAreaView, adjust the offset if necessary:
+            keyboardVerticalOffset={0}
         >
-            <ThemedView style={styles.titleContainer}>
-                <ThemedText type="title">Emergency Contact</ThemedText>
-            </ThemedView>
-            <ThemedText>Please add your emergency contact.</ThemedText>
-
-            <FormField
-                title="Name"
-                placeholder="John Doe"
-                value={name}
-                handleChangeText={(e) => setName(e)}
-                otherStyles="mt-7"
-                editable={!isSaved}
-            />
-            <FormField
-                title="Contact Number"
-                placeholder={`+63 ${isSaved ? contact : ''}`}
-                handleChangeText={(e) => setContact(63 + Number(e))}
-                otherStyles="mt-7"
-                keyboardType="numeric"
-                editable={!isSaved}
-            />
-
-            <CustomButton
-                title="Save"
-                handlesPress={submit}
-                containerStyle={
-                    isSaved ? styles.buttonDisabled : styles.buttonActive
+            <ParallaxScrollView
+                keyboardShouldPersistTaps="handled"
+                headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+                headerImage={
+                    <IconSymbol
+                        size={310}
+                        color="#808080"
+                        name="chevron.left.forwardslash.chevron.right"
+                        style={styles.headerImage}
+                    />
                 }
-                isLoading={isSubmitting}
-                disabled={isSaved || isSubmitting}
-            />
-        </ParallaxScrollView>
+            >
+                <ThemedView style={styles.titleContainer}>
+                    <ThemedText type="title">Emergency Contact</ThemedText>
+                </ThemedView>
+                <ThemedText>Please add your emergency contact.</ThemedText>
+
+                <FormField
+                    title="Name"
+                    placeholder="John Doe"
+                    value={name}
+                    handleChangeText={(e) => setName(e)}
+                    otherStyles="mt-7"
+                    editable={!isSaved}
+                />
+                <FormField
+                    title="Contact Number"
+                    placeholder={`+63 ${isSaved ? contact : ''}`}
+                    handleChangeText={(e) => setContact(63 + Number(e))}
+                    otherStyles="mt-7"
+                    keyboardType="numeric"
+                    editable={!isSaved}
+                />
+
+                <CustomButton
+                    title="Save"
+                    handlesPress={submit}
+                    containerStyle={
+                        isSaved ? styles.buttonDisabled : styles.buttonActive
+                    }
+                    isLoading={isSubmitting}
+                    disabled={isSaved || isSubmitting}
+                />
+            </ParallaxScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
