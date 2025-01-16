@@ -37,23 +37,26 @@ export default function TabLayout() {
         name="emergency"
         options={{
           title: 'Emergency',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.app.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="crash"
-        options={{
-          title: 'Crash Detection',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="distress"
-        options={{
-          title: 'Distress Voice',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
+      name="crash"
+      options={{
+        title: 'Crash Detection',
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="exclamationmark.brakesignal" color={color} />
+        
+      }}
+    />
+
+    <Tabs.Screen
+      name="distress"
+      options={{
+        title: 'Distress Voice',
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="sos" color={color} />
+        
+      }}
+    />
     </Tabs>
   );
 }
