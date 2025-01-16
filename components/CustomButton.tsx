@@ -29,9 +29,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
                 isLoading && styles.loading,
             ]}
         >
-            <Text style={[styles.buttonText, textStyle]}>
-                {title}
-            </Text>
+            <Text style={[styles.buttonText, textStyle]}>{title}</Text>
         </TouchableOpacity>
     );
 };
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
         borderWidth: 2,
-        borderRadius: 16,        
+        borderRadius: 16,
         backgroundColor: '#61F2FF',
         width: '100%',
     },
