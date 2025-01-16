@@ -11,6 +11,7 @@ import { useGlobalContext } from '@/context/GlobalProvider';
 export default function TabTwoScreen() {
   const { name, setName, contact, setContact } = useGlobalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSaved, setIsSaved] = useState(false); 
 
   const validateForm = () => {
     if (!name.trim()) {
@@ -45,7 +46,8 @@ export default function TabTwoScreen() {
       }
 
       Alert.alert('Success', 'Emergency contact added successfully');
-      console.log(name, contact);
+
+      setIsSaved(true);
     } catch (error) {
       Alert.alert('Error', (error as Error).message);
     } finally {
@@ -75,20 +77,25 @@ export default function TabTwoScreen() {
         value={name}
         handleChangeText={(e) => setName(e)} 
         otherStyles="mt-7"
+        editable={!isSaved}
       />
       <FormField
         title="Contact Number"
-        placeholder={`+63`}
+        placeholder={`+63 ${isSaved ? contact : ''}`}
         handleChangeText={(e) => setContact(63+Number(e))} 
         otherStyles="mt-7"
         keyboardType="numeric"
+        editable={!isSaved}
       />
 
       <CustomButton
         title="Save"
         handlesPress={submit}
-        containerStyle="mt-7"
+        containerStyle={
+          isSaved ? styles.buttonDisabled : styles.buttonActive
+        }
         isLoading={isSubmitting}
+        disabled={isSaved || isSubmitting} 
       />
     </ParallaxScrollView>
   );
@@ -104,5 +111,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     gap: 8,
+  },
+  buttonActive: {
+      backgroundColor: '#3B82F6',
+  },
+  buttonDisabled: {
+      backgroundColor: '#D1D5DB',
   },
 });
