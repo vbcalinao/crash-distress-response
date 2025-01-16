@@ -1,11 +1,4 @@
-import {
-    StyleSheet,
-    Text,
-    Modal,
-    View,
-    TouchableOpacity,
-    Alert,
-} from 'react-native';
+import { StyleSheet, Text, Modal, View, TouchableOpacity, Alert } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -16,17 +9,17 @@ import axios from 'axios';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from 'expo-router';
-import { API_URL, API_KEY, API_SECRET } from '@env';
 
 export default function TabThreeScreen() {
-    const [accelerometerPermission, setAccelerometerPermission] =
-        useState(null);
+    const [accelerometerPermission, setAccelerometerPermission] = useState(null);
     const [gyroscopePermission, setGyroscopePermission] = useState(null);
     const [isFalling, setIsFalling] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [warningModal, setWarningModal] = useState(false);
     const { name, contact } = useGlobalContext();
     const isFocused = useIsFocused();
+
+    const API_KEY = 'c67e7f95';
 
     async function sendSMS() {
         if (name.trim() === '') {
@@ -40,9 +33,9 @@ export default function TabThreeScreen() {
         }
 
         try {
-            const response = await axios.post(API_URL, {
+            const response = await axios.post('https://rest.nexmo.com/sms/jsons', {
                 api_key: API_KEY,
-                api_secret: API_SECRET,
+                api_secret: 'ysV9yVARRLAACPVH',
                 to: '63' + contact,
                 from: 'Vonage API',
                 text: `You've been an emergency contact by ${name} in the Angkas app. A crash has been detected at the following location: https://maps.app.goo.gl/d46PKyC3PTbkkPDr9`,
@@ -52,10 +45,7 @@ export default function TabThreeScreen() {
                 console.log('Message sent successfully!');
                 return true;
             } else {
-                console.error(
-                    'Failed to send message:',
-                    response.data.messages[0]['error-text']
-                );
+                console.error('Failed to send message:', response.data.messages[0]['error-text']);
                 return false;
             }
         } catch (error) {
@@ -72,17 +62,9 @@ export default function TabThreeScreen() {
             setGyroscopePermission(gyroscope.status);
 
             if (accelerometer.status !== 'granted') {
-                Alert.alert(
-                    'Permission Required',
-                    'Please enable accelerometer access in settings.',
-                    [{ text: 'OK' }]
-                );
+                Alert.alert('Permission Required', 'Please enable accelerometer access in settings.', [{ text: 'OK' }]);
             } else if (gyroscope.status !== 'granted') {
-                Alert.alert(
-                    'Permission Required',
-                    'Please enable gyroscope access in settings.',
-                    [{ text: 'OK' }]
-                );
+                Alert.alert('Permission Required', 'Please enable gyroscope access in settings.', [{ text: 'OK' }]);
             }
         } catch (err) {
             console.error('Failed to request permission', err);
@@ -98,15 +80,13 @@ export default function TabThreeScreen() {
 
             // Set up accelerometer to detect phone falling
             Accelerometer.setUpdateInterval(100);
-            accelerometerSubscription = Accelerometer.addListener(
-                ({ x, y, z }) => {
-                    const acceleration = Math.sqrt(x * x + y * y + z * z);
+            accelerometerSubscription = Accelerometer.addListener(({ x, y, z }) => {
+                const acceleration = Math.sqrt(x * x + y * y + z * z);
 
-                    if (acceleration < 0.6) {
-                        sendSMS();
-                    }
+                if (acceleration < 0.6) {
+                    sendSMS();
                 }
-            );
+            });
 
             // Set up gyroscope to enhance fall detection
             Gyroscope.setUpdateInterval(100);
@@ -140,14 +120,11 @@ export default function TabThreeScreen() {
                     name="chevron.left.forwardslash.chevron.right"
                     style={styles.headerImage}
                 />
-            }
-        >
+            }>
             <ThemedView style={styles.titleContainer}>
                 <ThemedText type="title">Crash Detection</ThemedText>
             </ThemedView>
-            <ThemedText>
-                This app includes example code to help you get started.
-            </ThemedText>
+            <ThemedText>This app includes example code to help you get started.</ThemedText>
 
             <Text style={styles.permissionText}>
                 Accelerometer Permission: {accelerometerPermission}
@@ -164,9 +141,7 @@ export default function TabThreeScreen() {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>
-                            Warning: Phone is falling!
-                        </Text>
+                        <Text style={styles.modalText}>Warning: Phone is falling!</Text>
                         <TouchableOpacity
                             style={styles.closeButton}
                             onPress={() => setModalVisible(false)}
@@ -200,6 +175,7 @@ export default function TabThreeScreen() {
                     </View>
                 </View>
             </Modal>
+
         </ParallaxScrollView>
     );
 }
