@@ -1,4 +1,10 @@
-import { View, Text, TextInput, StyleSheet, useColorScheme } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    useColorScheme,
+} from 'react-native';
 import { useState } from 'react';
 
 interface FormFieldProps {
@@ -26,13 +32,29 @@ const FormField: React.FC<FormFieldProps> = ({
 
     return (
         <View style={[styles.container, otherStyles]}>
-            <Text style={[styles.title, { color: isDarkMode ? '#E5E5E5' : '#333' }]}>
+            <Text
+                style={[
+                    styles.title,
+                    { color: isDarkMode ? '#E5E5E5' : '#333' },
+                ]}
+            >
                 {title}
             </Text>
-            <View style={[styles.inputContainer, { borderColor: isDarkMode ? '#666' : '#E5E5E5', backgroundColor: isDarkMode ? '#333' : '#f9f9f9' }]}>
+            <View
+                style={[
+                    styles.inputContainer,
+                    {
+                        borderColor: isDarkMode ? '#666' : '#E5E5E5',
+                        backgroundColor: isDarkMode ? '#333' : '#f9f9f9',
+                    },
+                ]}
+            >
                 <TextInput
                     editable={editable}
-                    style={[styles.input, { color: isDarkMode ? '#fff' : '#333' }]}
+                    style={[
+                        styles.input,
+                        { color: isDarkMode ? '#fff' : '#333' },
+                    ]}
                     value={value}
                     placeholder={placeholder}
                     onChangeText={handleChangeText}

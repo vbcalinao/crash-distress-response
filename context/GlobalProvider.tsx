@@ -1,9 +1,4 @@
-import {
-    createContext,
-    useContext,
-    useState,
-    ReactNode,
-} from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface GlobalContextType {
     name: string;
@@ -17,7 +12,9 @@ const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 export const useGlobalContext = () => {
     const context = useContext(GlobalContext);
     if (!context) {
-        throw new Error('useGlobalContext must be used within a GlobalProvider');
+        throw new Error(
+            'useGlobalContext must be used within a GlobalProvider'
+        );
     }
     return context;
 };
