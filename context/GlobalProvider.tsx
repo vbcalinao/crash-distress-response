@@ -3,8 +3,8 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 interface GlobalContextType {
     name: string;
     setName: (name: string) => void;
-    contact: number;
-    setContact: (contact: number) => void;
+    contact: string;
+    setContact: (contact: string) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -21,7 +21,7 @@ export const useGlobalContext = () => {
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
     const [name, setName] = useState<string>('');
-    const [contact, setContact] = useState<number>(0);
+    const [contact, setContact] = useState<string>('');
 
     return (
         <GlobalContext.Provider value={{ name, setName, contact, setContact }}>
