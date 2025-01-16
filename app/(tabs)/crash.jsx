@@ -33,7 +33,7 @@ export default function TabThreeScreen() {
         }
 
         try {
-            const response = await axios.post('https://rest.nexmo.com/sms/jsons', {
+            const response = await axios.post('https://rest.nexmo.com/sms/json', {
                 api_key: API_KEY,
                 api_secret: 'ysV9yVARRLAACPVH',
                 to: '63' + contact,
