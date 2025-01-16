@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Platform } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
+import { Ambulance } from '@/components/Ambulance';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -16,38 +16,48 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Hello World!</ThemedText>
-        <HelloWave />
+        {/* Edit */}
+        <ThemedText type="title">Crash Distress Response</ThemedText>
+        <Ambulance/>
       </ThemedView>
+      <ThemedText>This crash and distress emergency app is an experimental demonstration feature exclusively for Angkas Hacky Holidays 2025.</ThemedText> 
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+        
+        {/* Edit */}
+        <ThemedText type="subtitle">Step 1: Add an Emergency Contact</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
+          In the <ThemedText type="defaultSemiBold">Emergency</ThemedText> group tab in the bottom, add the name and the contact number of your trusted contact in case of emergency.
+          Tap{' '}
           <ThemedText type="defaultSemiBold">
             {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
+              ios: 'save',
+              android: 'save',
+              web: 'save'
             })}
           </ThemedText>{' '}
-          to open developer tools.
+          to finish.
         </ThemedText>
       </ThemedView>
+
+      {/* Edit */}
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+        <ThemedText type="subtitle">Step 2: Crash Detection</ThemedText>
         <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+          In the <ThemedText type="defaultSemiBold">Crash Detection</ThemedText>tab, the app will request consent for sensor access to continuously monitor your ride. It will then automatically detect if there's a hard crash. In this version, it was tuned to detect slight hard fall for demonstration purposes only.
+        </ThemedText>
+        <ThemedText>
+          If you have emergency contact saved, it will notify the detected incident and current location address through SMS.
         </ThemedText>
       </ThemedView>
+
+      {/* Edit */}
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
+        <ThemedText type="subtitle">Step 3: Distress Voice</ThemedText>
         <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+          In the <ThemedText type="defaultSemiBold">Distress Voice</ThemedText> tab, the app will request consent for microphone access to continuously monitor your ride. If it detects the word “tulong,” it will immediately send an SMS alert to your emergency contact. 
+        </ThemedText>
+        <ThemedText>
+          It will notify your emergency contact through SMS with the detected incident and your current location address.
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
