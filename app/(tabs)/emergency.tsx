@@ -69,7 +69,7 @@ export default function TabTwoScreen() {
                     <IconSymbol
                         size={310}
                         color="#808080"
-                        name="chevron.left.forwardslash.chevron.right"
+                        name="plus.app"
                         style={styles.headerImage}
                     />
                 }
