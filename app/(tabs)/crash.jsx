@@ -16,6 +16,7 @@ import axios from 'axios';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from 'expo-router';
+import { API_KEY, BASE_URL } from '@env';
 
 export default function TabThreeScreen() {
     const [accelerometerPermission, setAccelerometerPermission] =
@@ -28,9 +29,9 @@ export default function TabThreeScreen() {
     const { name, contact } = useGlobalContext();
     const isFocused = useIsFocused();
 
-    async function sendSMS() {
-        let isRequestInProgress = false;
+    let isRequestInProgress = false;
 
+    async function sendSMS() {
         if (isRequestInProgress) {
             console.log('Please wait for the current request to finish.');
             return;
@@ -45,16 +46,20 @@ export default function TabThreeScreen() {
 
             const options = {
                 method: 'POST',
-                url: process.env.BASE_URL,
+                url: BASE_URL,
                 headers: {
                     accept: 'application/json',
                     'content-type': 'application/x-www-form-urlencoded',
-                    authorization: `Basic ${process.env.API_KEY}`,
+                    authorization: `Basic ${API_KEY}`,
                 },
                 data: encodedParams,
             };
 
-            await axios.request(options);
+            const response = await axios.request(options);
+
+            if (response) {
+                isRequestInProgress = false;
+            }
             console.log('Message sent successfully!');
         } catch (error) {
             console.error('Error in try block:', error);
