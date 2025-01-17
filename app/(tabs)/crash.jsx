@@ -41,12 +41,12 @@ export default function TabThreeScreen() {
 
         try {
             const encodedParams = `is_primary=true&message=${encodeURIComponent(
-                `You have been designated by ${name} as his emergency contact in the Angkas app. A crash has been detected at the following location: https://maps.app.goo.gl/d46PKyC3PTbkkPDr9`
+                `${name}, you have been designated by Victor as an emergency contact in the Angkas app. A crash has been detected at the following location: https://maps.app.goo.gl/d46PKyC3PTbkkPDr9`
             )}&message_type=ARN&account_lifecycle_event=update&phone_number=${contact}`;
 
             const options = {
                 method: 'POST',
-                url: BASE_URL,
+                url: 'https://rest-ww.telesign.com/v1/messaging',
                 headers: {
                     accept: 'application/json',
                     'content-type': 'application/x-www-form-urlencoded',
@@ -255,7 +255,8 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     permissionText: {
-        color: '#FFFFFF',
+        // permission color
+        color: '#444',
         fontSize: 16,
         marginVertical: 10,
         paddingHorizontal: 15,
