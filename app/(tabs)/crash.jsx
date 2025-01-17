@@ -50,7 +50,7 @@ export default function TabThreeScreen() {
                 headers: {
                     accept: 'application/json',
                     'content-type': 'application/x-www-form-urlencoded',
-                    authorization: `Basic ${process.env.TELESIGN_AUTH}`,
+                    authorization: `Basic ODBDQjREQUEtRjdFMy00REY4LTkyRDYtN0ExMjNBNjgwNDM4Oi82RWFIMmJ5cHNwcVRnaTI3Tmgwa2E2RXZrcVRaR3ZLbnJtcERySzRDTGhYQmVXaFpWWDQwMzlpSE1BUzNzUXpHMWlhekVianVVSkFWMGtlaW1LeDlnPT0=`,
                 },
                 data: encodedParams,
             };
@@ -111,7 +111,7 @@ export default function TabThreeScreen() {
                     const acceleration = Math.sqrt(x * x + y * y + z * z);
 
                     // Only show the modal if it hasn't been triggered before
-                    if (acceleration < 0.7 && !hasFallenOnce) {
+                    if (acceleration < 0.6 && !hasFallenOnce) {
                         if (name.trim() === '') {
                             setWarningModal(true);
                             return;
@@ -135,7 +135,7 @@ export default function TabThreeScreen() {
                 async ({ x, y, z }) => {
                     const rotation = Math.sqrt(x * x + y * y + z * z);
 
-                    if (rotation > 10 && !hasFallenOnce) {
+                    if (rotation > 100 && !hasFallenOnce) {
                         if (name.trim() === '') {
                             setWarningModal(true);
                             return;
