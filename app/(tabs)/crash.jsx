@@ -50,7 +50,7 @@ export default function TabThreeScreen() {
                 headers: {
                     accept: 'application/json',
                     'content-type': 'application/x-www-form-urlencoded',
-                    authorization: `Basic ${API_KEY}`,
+                    authorization: `Basic ${process.env.TELESIGN_AUTH}`,
                 },
                 data: encodedParams,
             };
@@ -111,7 +111,7 @@ export default function TabThreeScreen() {
                     const acceleration = Math.sqrt(x * x + y * y + z * z);
 
                     // Only show the modal if it hasn't been triggered before
-                    if (acceleration < 0.6 && !hasFallenOnce) {
+                    if (acceleration < 0.7 && !hasFallenOnce) {
                         if (name.trim() === '') {
                             setWarningModal(true);
                             return;
@@ -182,7 +182,9 @@ export default function TabThreeScreen() {
                 <ThemedText type="title">Crash Detection</ThemedText>
             </ThemedView>
             <ThemedText>
-                This app includes example code to help you get started.
+                This app require consent and access for sensor motion data to
+                    continuously monitor your ride. It will then automatically
+                    detect if there's a hard crash.
             </ThemedText>
 
             <Text style={styles.permissionText}>
@@ -201,7 +203,7 @@ export default function TabThreeScreen() {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>
-                            Warning: Phone is falling!
+                            Emergency! A crash has been detected!
                         </Text>
                         <TouchableOpacity
                             style={styles.closeButton}
